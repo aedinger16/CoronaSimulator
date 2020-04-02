@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { random } from '../js/modules/random';
+import { random } from '../js/modules/random.mjs';
 
 function equalRandom(min, max) {
   for (let i = 0; i < 10000; i++) {

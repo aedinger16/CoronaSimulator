@@ -1,6 +1,6 @@
 import * as assert from 'assert';
-import { random } from '../js/modules/random';
-import { Ball } from '../js/modules/ball';
+import { random } from '../js/modules/random.mjs';
+import { Ball } from '../js/modules/ball.mjs';
 
 function equalRandom(min, max) {
   for (let i = 0; i < 10000; i++) {
