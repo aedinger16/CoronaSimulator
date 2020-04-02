@@ -3,12 +3,11 @@ import { random } from './random';
 
 // define Ball constructor
 export class Ball {
-  constructor(x, y, velX, velY, v, color, size) {
+  constructor(x, y, velX, velY, color, size) {
     this.x = x;
     this.y = y;
     this.velX = velX;
     this.velY = velY;
-    this.v = v;
     this.color = color;
     this.size = size;
   }
@@ -44,35 +43,11 @@ export class Ball {
       this.velY = -(this.velY);
     }
 
-    if(Math.pow(this.velX, 2)  + Math.pow(this.velY, 2) == Math.pow(this.v, 2)){
-      this.x += this.velX;
-      this.y += this.velY;
-    }
-
-    while(Math.round(Math.pow(this.velX, 2))  + Math.round(Math.pow(this.velY, 2)) > Math.round(Math.pow(this.v, 2))){
-      this.velY -0.1;
-      this.velX -0.1;
-      console.log(Math.round(Math.pow(this.velX, 2))  + Math.round(Math.pow(this.velY, 2)));
-    }
-
-    while(Math.round(Math.pow(this.velX, 2))  + Math.round(Math.pow(this.velY, 2)) < Math.round(Math.pow(this.v, 2))){
-      this.velY +0.1;
-      this.velX +0.1;
-      console.log(Math.round(Math.pow(this.velX, 2))  + Math.round(Math.pow(this.velY, 2)));
-    }
-
     this.x += this.velX;
     this.y += this.velY;
-    
   }
 
   // define ball collision detection
-
-  //`rgb(180,125,73)` ==> infiziert
-  //`rgb(0,0,136)` ==> nicht infiziert
-  //`rgb(255,0,255)` ==> geheilt
-  //`rgb(255,255,255)` ==> tot
-
   collisionDetect(balls) {
     for (let j = 0; j < balls.length; j++) {
       if (!(this === balls[j])) {

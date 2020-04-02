@@ -1,6 +1,7 @@
 // import of modules
 import { random } from './modules/random';
 import { Ball } from './modules/ball';
+import { randomVelocity } from './modules/randomVelocity';
 
 // setup canvas
 
@@ -18,21 +19,21 @@ window.addEventListener('resize', () => {
 
 // define array to store balls
 
+const randomVelocitiesFirst = randomVelocity(2);   // GESCHWINDIGKEIT DES ERSTEN HIER ÄNDERN
 const balls = [];
 
 const ball = new Ball(
   random(20, width - 20),
   random(20, height - 20),
-  random(-7, 7, 0),
-  random(-7, 7, 0),
-  3,
+  randomVelocitiesFirst[0],
+  randomVelocitiesFirst[1],
   `rgb(180,125,73)`,//`rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`, color
   5   //random(10, 20) size
 );
 
-balls.push(ball)
+balls.push(ball);
 
-var amountOfPeople = 100;
+var amountOfPeople = 3000;
 
 // define loop that keeps drawing the scene constantly
 
@@ -41,18 +42,18 @@ function loop() {
   ctx.fillRect(0, 0, width, height);
 
   while (balls.length < amountOfPeople) {
+
+    const randomVelocities = randomVelocity(2);       // GESCHWINDIGKEIT DER ANDEREN HIER ÄNDERN
     const ball = new Ball(
       random(20, width - 20),
       random(20, height - 20),
-      random(-7, 7, 0),
-      random(-7, 7, 0),
-      3,
-      `rgb(0,0,136)`,//`rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`, color
-      5   //random(10, 20) size
+      randomVelocities[0],
+      randomVelocities[1],
+      `rgb(0,0,136)`,
+      5
     );
     balls.push(ball);
   }
-  
 
   for (let i = 0; i < balls.length; i++) {
     balls[i].draw(ctx);
