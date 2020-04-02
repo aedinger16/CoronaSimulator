@@ -5,7 +5,8 @@
     "build": "parcel build index.html --public-url .",
     "test": "run-s lint build mocha",
     "lint": "eslint --ignore-path .gitignore .",
-    "mocha": "ts-mocha"
+    "mocha": "ts-mocha",
+    "type": "module"
   },
   "dependencies": {},
   "devDependencies": {
