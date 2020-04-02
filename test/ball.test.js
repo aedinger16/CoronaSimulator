@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { Ball } from '../js/modules/ball.mjs';
+import { Ball } from '../js/modules/ball.js';
 
 describe('bouncing ball', () => {
   it('should collide with the nearby ball and change color', () => {

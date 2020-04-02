@@ -1,7 +1,7 @@
 // import of modules
-import { random } from './modules/random.mjs';
-import { Ball } from './modules/ball.mjs';
-import { randomVelocity } from './modules/randomVelocity.mjs';
+import { random } from './modules/random.js';
+import { Ball } from './modules/ball.js';
+import { randomVelocity } from './modules/randomVelocity.js';
 
 // setup canvas
 

@@ -1,5 +1,4 @@
 // import of modules
-import { random } from './random';
 
 // define Ball constructor
 export class Ball {
