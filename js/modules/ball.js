@@ -2,6 +2,7 @@
 
 // define Ball constructor
 export class Ball {
+  
   constructor(x, y, velX, velY, color, size) {
     this.x = x;
     this.y = y;
@@ -62,4 +63,10 @@ export class Ball {
       }
     }
   }
+
+
+  // set velocityX(velocityX){
+  //   this.velX = velocityX;
+  // }
+
 }
