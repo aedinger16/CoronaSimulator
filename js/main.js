@@ -6,20 +6,21 @@ import { randomVelocity } from './modules/randomVelocity.js';
 // setup canvas
 
 const canvas = document.querySelector('canvas');
+const settings = document.getElementById('divNavSettings');
 const ctx = canvas.getContext('2d');
 
-let width = canvas.width = window.innerWidth;
+let width = canvas.width = window.innerWidth - settings.offsetWidth;
 let height = canvas.height = window.innerHeight;
 const screenSize = { width, height };
 
 window.addEventListener('resize', () => {
-  width = canvas.width = screenSize.width = window.innerWidth;
+  width = canvas.width = screenSize.width = window.innerWidth - settings.offsetWidth;
   height = canvas.height = screenSize.height = window.innerHeight;
 });
 
 // define array to store balls
 
-const randomVelocitiesFirst = randomVelocity(10);   // GESCHWINDIGKEIT DES ERSTEN HIER ÄNDERN
+const randomVelocitiesFirst = randomVelocity(2);   // GESCHWINDIGKEIT DES ERSTEN HIER ÄNDERN
 const balls = [];
 
 const ball = new Ball(
@@ -33,7 +34,7 @@ const ball = new Ball(
 
 balls.push(ball);
 
-var amountOfPeople = 3000;
+var amountOfPeople = 10;
 
 // define loop that keeps drawing the scene constantly
 
@@ -43,7 +44,7 @@ function loop() {
 
   while (balls.length < amountOfPeople) {
 
-    const randomVelocities = randomVelocity(10);       // GESCHWINDIGKEIT DER ANDEREN HIER ÄNDERN
+    const randomVelocities = randomVelocity(2);       // GESCHWINDIGKEIT DER ANDEREN HIER ÄNDERN
     const ball = new Ball(
       random(20, width - 20),
       random(20, height - 20),

@@ -44,7 +44,7 @@ nav {
   position: relative;
   -webkit-appearance: none;
   width: 98%;
-  height: 25px;
+  height: 3px;
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
@@ -59,23 +59,50 @@ nav {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 25px;
-  height: 25px;
+  width: 23px;
+  height: 10px;
+  border: 0;
   background: #4CAF50;
   cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
+  width: 23px;
+  height: 10px;
+  border: 0;
   background: #4CAF50;
   cursor: pointer;
 }
 
 div {
-  border: 4px !important;
   border-color: lawngreen;
   margin: 10px;
+}
+
+.divOverall {
+  margin: 0px;
+  min-width: 250px;
+  width: 15%;
+  display: flex;
+  height: fit-content;
+}
+
+.navSettings {
+  margin: 0px;
+  min-width: 250px;
+  width: 15%;
+  float: left !important;
+}
+
+.navSettingsRight {
+  max-width: 85%;
+  margin: 0px;
+  float: right;
+}
+
+canvas {
+  height: inherit;
+  width: inherit;
 }
 
 /* Oben */
