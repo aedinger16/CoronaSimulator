@@ -19,7 +19,7 @@ window.addEventListener('resize', () => {
 
 // define array to store balls
 
-const randomVelocitiesFirst = randomVelocity(2);   // GESCHWINDIGKEIT DES ERSTEN HIER ÄNDERN
+const randomVelocitiesFirst = randomVelocity(10);   // GESCHWINDIGKEIT DES ERSTEN HIER ÄNDERN
 const balls = [];
 
 const ball = new Ball(
@@ -43,7 +43,7 @@ function loop() {
 
   while (balls.length < amountOfPeople) {
 
-    const randomVelocities = randomVelocity(2);       // GESCHWINDIGKEIT DER ANDEREN HIER ÄNDERN
+    const randomVelocities = randomVelocity(10);       // GESCHWINDIGKEIT DER ANDEREN HIER ÄNDERN
     const ball = new Ball(
       random(20, width - 20),
       random(20, height - 20),
