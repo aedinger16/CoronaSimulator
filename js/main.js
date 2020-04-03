@@ -90,7 +90,7 @@ buttonStartStop.addEventListener('click', function(){
   }
 });
 
-// ----------------- ERSTER INFIZIERTER -------------------
+// ----------------- LOOP FÜR DAS STÄNDIGE NEUZEICHNEN -------------------
 
 var persons = [];
 var addFirstPerson = true;
@@ -120,10 +120,25 @@ function loop() {
 
 function updateGroups(percentGroup, group){
   
-  // var percentToNumber = Math.floor(numberOfPersons * percentGroup / 100)
-  // if(group === "one"){
-  //   balls.forEach(x => x.velX = velo)
-  // }
+  var percentToNumber = Math.floor(numberOfPersons * percentGroup / 100)
+  console.log(percentToNumber);
+  if(group === "one"){
+    
+    var vel = sliderVelocityGroupOne.value;
+    var velX = 0;;
+    var velY = 0;
+
+    for (let i = 0; i < percentToNumber; i++) {
+
+      velX = persons[i].velX;
+      velY = persons[i].velY;
+
+      var multiplier = vel / (velX * velY);
+
+      persons[i].velX = persons[i].velX * multiplier;
+      persons[i].velY = persons[i].velY * multiplier;
+    }
+  }
 }
 
 function fillPersons(){
@@ -160,6 +175,7 @@ function fillPersons(){
 
 function start(){
   startStop = true;
+  updatePersons = true;
   buttonStartStop.textContent = "Stoppen";
   sliderNumberOfPersons.disabled = true;
   loop();
