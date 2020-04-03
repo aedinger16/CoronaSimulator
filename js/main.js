@@ -57,26 +57,37 @@ window.addEventListener('resize', () => {
 // ---------------- SLIDER CHANGES -------------------------
 
 sliderPercentGroupOne.addEventListener('click', function(){
+  
   percentGroupOne = sliderPercentGroupOne.value; 
-  updateGroups(percentGroupOne, "one");
+  updateGroups(percentGroupOne);
   sliderPercentGroupTwo.value = 100 - sliderPercentGroupOne.value;
+  reset();
 });
 
 sliderVelocityGroupOne.addEventListener('click', function(){
   velocityGroupOne = sliderVelocityGroupOne.value; 
+  updateVelocity("one", velocityGroupOne);
+  reset();
+  
 });
 
 sliderPercentGroupTwo.addEventListener('click', function(){
+  
   percentGroupTwo = sliderPercentGroupTwo.value; 
+  updateGroups(percentGroupTwo);
   sliderPercentGroupOne.value = 100 - sliderPercentGroupTwo.value;
+  reset();
 });
 
 sliderVelocityGroupTwo.addEventListener('click', function(){
   velocityGroupTwo = sliderVelocityGroupTwo.value; 
+  updateVelocity("two", velocityGroupTwo);
+  reset();
 });
 
 sliderNumberOfPersons.addEventListener('click', function(){
   numberPersonsChanged(sliderNumberOfPersons.value);
+  reset();
 });
 
 // -------------- BUTTON START STOPP ---------------------
@@ -118,37 +129,99 @@ function loop() {
   firstRun = false;
 }
 
-function updateGroups(percentGroup, group){
+function updateGroups(percentGroup){
+  setGroups();
+
+  var velOne = velocityGroupOne;
+  var velTwo = velocityGroupTwo;
+  var velX = 0;
+  var velY = 0;
+
+  persons.forEach(person => {
+    if (person.group === "one") {
+     
+      velX = person.velX;
+      velY = person.velY;
   
-  var percentToNumber = Math.floor(numberOfPersons * percentGroup / 100)
-  console.log(percentToNumber);
-  if(group === "one"){
-    
-    var vel = sliderVelocityGroupOne.value;
-    var velX = 0;;
-    var velY = 0;
+      var multiplier = Math.pow(velOne, 2) / (Math.pow(velX, 2) + Math.pow(velY, 2));
+  
+      person.velX = Math.pow(velX, 2) * multiplier;
+      person.velY = Math.pow(velY, 2) * multiplier;
+        
+    } 
+    else if(person.group === "two"){
+     
+      velX = person.velX;
+      velY = person.velY;
 
-    for (let i = 0; i < percentToNumber; i++) {
+      var velXIsMinus = false;
+      var velYIsMinus = false;
 
-      velX = persons[i].velX;
-      velY = persons[i].velY;
-
-      var multiplier = vel / (velX * velY);
-
-      persons[i].velX = persons[i].velX * multiplier;
-      persons[i].velY = persons[i].velY * multiplier;
+      if(velX < 0){
+        velXIsMinus = true;
+      }
+      if(velY < 0){
+        velYIsMinus = true;
+      }
+  
+      var multiplier = Math.pow(velTwo, 2) / (Math.pow(velX, 2) + Math.pow(velY, 2));
+  
+      velXIsMinus ? person.velX = -(Math.pow(velX, 2) * multiplier) : person.velX = (Math.pow(velX, 2) * multiplier);
+      velYIsMinus ? person.velY = -(Math.pow(velY, 2) * multiplier) : person.velY = (Math.pow(velY, 2) * multiplier); 
+       
     }
-  }
+  });
+
+  
+
+  
+}
+
+function updateVelocity(group, velGroup){
+
+  var velX = 0;
+  var velY = 0;
+
+  persons.forEach(person => {
+    if (person.group === group) {
+     
+      velX = person.velX;
+      velY = person.velY;
+
+      var velXIsMinus = false;
+      var velYIsMinus = false;
+
+      if(velX < 0){
+        velXIsMinus = true;
+      }
+      if(velY < 0){
+        velYIsMinus = true;
+      }
+  
+      var multiplier = Math.pow(velGroup, 2) / (Math.pow(velX, 2) + Math.pow(velY, 2));
+  
+
+
+      velXIsMinus ? person.velX = -(Math.pow(velX, 2) * multiplier) : person.velX = (Math.pow(velX, 2) * multiplier);
+      velYIsMinus ? person.velY = -(Math.pow(velY, 2) * multiplier) : person.velY = (Math.pow(velY, 2) * multiplier); 
+        
+    } 
+  });
+
+  
 }
 
 function fillPersons(){
-  while (persons.length < numberOfPersons) {
+  var numberOfGroupOne = Math.floor(sliderNumberOfPersons.value * sliderPercentGroupOne.value / 100);
 
-    const randomVelocities = randomVelocity(2);
+  while (persons.length < numberOfGroupOne) {
+
+    const randomVelocities = randomVelocity(sliderVelocityGroupOne.value);
     const ball = null;
 
     if(addFirstPerson === true){
       ball = new Ball(
+        "one",
         random(20, width - 20),
         random(20, height - 20),
         randomVelocities[0],
@@ -160,6 +233,7 @@ function fillPersons(){
     }
     else{
       ball = new Ball(
+        "one",
         random(20, width - 20),
         random(20, height - 20),
         randomVelocities[0],
@@ -171,6 +245,43 @@ function fillPersons(){
     
     persons.push(ball);
   }
+
+  while (persons.length < numberOfPersons) {
+
+    const randomVelocities = randomVelocity(sliderVelocityGroupTwo.value);
+    const ball = null;
+
+    
+      ball = new Ball(
+        "two",
+        random(20, width - 20),
+        random(20, height - 20),
+        randomVelocities[0],
+        randomVelocities[1],
+        normal,
+        10
+      );
+    
+    
+    persons.push(ball);
+  }
+
+  //setGroups();
+  console.log(persons);
+
+}
+
+function setGroups(){
+  var numberOfGroupOne = Math.floor(numberOfPersons * percentGroupOne / 100);
+  var numberOfGroupTwo = numberOfPersons - numberOfGroupOne;
+
+  for (let index = 0; index < numberOfGroupOne; index++) {
+    persons[index].group = "one";    
+  }
+
+  for (let index = numberOfGroupOne; index < numberOfPersons; index++) {
+    persons[index].group = "two";    
+  }
 }
 
 function start(){
@@ -178,6 +289,9 @@ function start(){
   updatePersons = true;
   buttonStartStop.textContent = "Stoppen";
   sliderNumberOfPersons.disabled = true;
+  persons = [];
+  addFirstPerson = true;
+  fillPersons();
   loop();
 }
 
@@ -187,6 +301,18 @@ function stop(){
   sliderNumberOfPersons.disabled = false;
   updatePersons = false;
   loop();
+}
+function reset(){
+  startStop = false;
+  buttonStartStop.textContent = "Starten";
+  sliderNumberOfPersons.disabled = false;
+  updatePersons = false;
+    
+  persons = [];
+  ctx.fillStyle = 'rgba(0,0,0,1)';
+  ctx.fillRect(0, 0, width, height);
+
+  //loop();
 }
 
 function numberPersonsChanged(newNumberOfPersons){
@@ -206,3 +332,4 @@ function numberPersonsChanged(newNumberOfPersons){
 }
 
 loop();
+setGroups();

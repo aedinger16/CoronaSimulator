@@ -3,7 +3,8 @@
 // define Ball constructor
 export class Ball {
   
-  constructor(x, y, velX, velY, color, size) {
+  constructor(group, x, y, velX, velY, color, size) {
+    this.group = group;
     this.x = x;
     this.y = y;
     this.velX = velX;
