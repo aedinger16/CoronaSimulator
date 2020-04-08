@@ -17,6 +17,8 @@ const sliderTimeOfRecover = document.getElementById('sliderTimeOfRecover');
 
 const buttonStartStop = document.getElementById('buttonStartStop');
 
+const buttonReset = document.getElementById('buttonReset');
+
 // ------------------ COLOR VALUES -----------------------
 
 const infected = `rgb(180,125,73)`;
@@ -27,16 +29,9 @@ const normal = `rgb(0,0,136)`;
 
 var startStop = false;
 
-var percentGroupOne = 50;
-var velocityGroupOne = 2;  
-
-var percentGroupTwo = 50;
-var velocityGroupTwo = 2; 
-
 var numberOfPersons = 50;
 
 var timeForRecover = 10;
-
 
 // ------------------ ERSTELLEN DES CANVAS --------------------------
 
@@ -57,37 +52,25 @@ window.addEventListener('resize', () => {
 // ---------------- SLIDER CHANGES -------------------------
 
 sliderPercentGroupOne.addEventListener('click', function(){
-  
-  percentGroupOne = sliderPercentGroupOne.value; 
-  updateGroups(percentGroupOne);
   sliderPercentGroupTwo.value = 100 - sliderPercentGroupOne.value;
-  reset();
+  updateGroups();
 });
 
 sliderVelocityGroupOne.addEventListener('click', function(){
-  velocityGroupOne = sliderVelocityGroupOne.value; 
-  updateVelocity("one", velocityGroupOne);
-  reset();
-  
+  updateVelocity("one", sliderVelocityGroupOne.value);  
 });
 
 sliderPercentGroupTwo.addEventListener('click', function(){
-  
-  percentGroupTwo = sliderPercentGroupTwo.value; 
-  updateGroups(percentGroupTwo);
   sliderPercentGroupOne.value = 100 - sliderPercentGroupTwo.value;
-  reset();
+  updateGroups();
 });
 
 sliderVelocityGroupTwo.addEventListener('click', function(){
-  velocityGroupTwo = sliderVelocityGroupTwo.value; 
-  updateVelocity("two", velocityGroupTwo);
-  reset();
+  updateVelocity("two", sliderVelocityGroupTwo.value);
 });
 
 sliderNumberOfPersons.addEventListener('click', function(){
   numberPersonsChanged(sliderNumberOfPersons.value);
-  reset();
 });
 
 // -------------- BUTTON START STOPP ---------------------
@@ -101,6 +84,10 @@ buttonStartStop.addEventListener('click', function(){
   }
 });
 
+buttonReset.addEventListener('click', function(){
+  reset();
+});
+
 // ----------------- LOOP FÜR DAS STÄNDIGE NEUZEICHNEN -------------------
 
 var persons = [];
@@ -112,8 +99,6 @@ function loop() {
   ctx.fillStyle = 'rgba(0,0,0,1)';
   ctx.fillRect(0, 0, width, height);
 
-  fillPersons();
-  console.log(updatePersons);
   for (let i = 0; i < persons.length; i++) {
     persons[i].draw(ctx);
     if(updatePersons === true && firstRun === false){
@@ -129,52 +114,52 @@ function loop() {
   firstRun = false;
 }
 
-function updateGroups(percentGroup){
+function updateGroups(){
   setGroups();
 
-  var velOne = velocityGroupOne;
-  var velTwo = velocityGroupTwo;
-  var velX = 0;
-  var velY = 0;
+  console.log(persons);
+
+  var velOne = sliderVelocityGroupOne.value;
+  var velTwo = sliderVelocityGroupTwo.value;
 
   persons.forEach(person => {
-    if (person.group === "one") {
-     
-      velX = person.velX;
-      velY = person.velY;
-  
-      var multiplier = Math.pow(velOne, 2) / (Math.pow(velX, 2) + Math.pow(velY, 2));
-  
-      person.velX = Math.pow(velX, 2) * multiplier;
-      person.velY = Math.pow(velY, 2) * multiplier;
+    if(person.group === "one"){
+
+      var vel = Math.round(Math.sqrt(Math.pow(person.velX, 2) + Math.pow(person.velY, 2)));
+
+      if(vel === sliderVelocityGroupOne.value){
         
-    } 
-    else if(person.group === "two"){
-     
-      velX = person.velX;
-      velY = person.velY;
-
-      var velXIsMinus = false;
-      var velYIsMinus = false;
-
-      if(velX < 0){
-        velXIsMinus = true;
+        console.log(sliderVelocityGroupOne.value);
+        const randomVelocities = randomVelocity(velOne);
+        person.velX = randomVelocities[0];
+        person.veY = randomVelocities[1];
       }
-      if(velY < 0){
-        velYIsMinus = true;
+    }
+
+    if(person.group === "two"){
+
+      var vel = Math.round(Math.sqrt(Math.pow(person.velX, 2) + Math.pow(person.velY, 2)));
+
+      if(vel === sliderVelocityGroupTwo.value){
+        const randomVelocities = randomVelocity(velTwo);
+        person.velX = randomVelocities[0];
+        person.veY = randomVelocities[1];
       }
-  
-      var multiplier = Math.pow(velTwo, 2) / (Math.pow(velX, 2) + Math.pow(velY, 2));
-  
-      velXIsMinus ? person.velX = -(Math.pow(velX, 2) * multiplier) : person.velX = (Math.pow(velX, 2) * multiplier);
-      velYIsMinus ? person.velY = -(Math.pow(velY, 2) * multiplier) : person.velY = (Math.pow(velY, 2) * multiplier); 
-       
     }
   });
+}
 
-  
+function setGroups(group){
 
-  
+  var numberOfGroupOne = Math.floor(sliderPercentGroupOne.value * numberOfPersons / 100);
+
+  for (let index = 0; index < numberOfGroupOne; index++) {
+    persons[index].group = "one";    
+  }
+
+  for (let index = numberOfGroupOne; index < numberOfPersons; index++) {
+    persons[index].group = "two";    
+  }
 }
 
 function updateVelocity(group, velGroup){
@@ -198,26 +183,37 @@ function updateVelocity(group, velGroup){
         velYIsMinus = true;
       }
   
-      var multiplier = Math.pow(velGroup, 2) / (Math.pow(velX, 2) + Math.pow(velY, 2));
-  
+      
+      const randomVelocities = randomVelocity(velGroup);
 
+      person.velX = randomVelocities[0];
+      person.velY = randomVelocities[1];
 
-      velXIsMinus ? person.velX = -(Math.pow(velX, 2) * multiplier) : person.velX = (Math.pow(velX, 2) * multiplier);
-      velYIsMinus ? person.velY = -(Math.pow(velY, 2) * multiplier) : person.velY = (Math.pow(velY, 2) * multiplier); 
-        
+      // var multiplier = Math.pow(velGroup, 2) / (Math.pow(velX, 2) + Math.pow(velY, 2));
+
+      // velXIsMinus ? person.velX = -(Math.pow(velX, 2) * multiplier) / 100 : person.velX = (Math.pow(velX, 2) * multiplier) / 100;
+      // velYIsMinus ? person.velY = -(Math.pow(velY, 2) * multiplier) / 100 : person.velY = (Math.pow(velY, 2) * multiplier) / 100;  
     } 
   });
 
-  
+  console.log(persons);
 }
 
-function fillPersons(){
-  var numberOfGroupOne = Math.floor(sliderNumberOfPersons.value * sliderPercentGroupOne.value / 100);
 
-  while (persons.length < numberOfGroupOne) {
+function prepareCanvasAndPersons(){
+
+  ctx.fillStyle = 'rgba(0,0,0,1)';
+  ctx.fillRect(0, 0, width, height);
+
+  var numberOfGroupOne = Math.floor(numberOfPersons * sliderPercentGroupOne.value / 100);
+  var currentGroup = "one";
+
+  while (persons.length < numberOfPersons) {
 
     const randomVelocities = randomVelocity(sliderVelocityGroupOne.value);
     const ball = null;
+
+    persons.length === numberOfGroupOne ? currentGroup = "two" : "one";
 
     if(addFirstPerson === true){
       ball = new Ball(
@@ -233,7 +229,7 @@ function fillPersons(){
     }
     else{
       ball = new Ball(
-        "one",
+        currentGroup,
         random(20, width - 20),
         random(20, height - 20),
         randomVelocities[0],
@@ -246,73 +242,30 @@ function fillPersons(){
     persons.push(ball);
   }
 
-  while (persons.length < numberOfPersons) {
-
-    const randomVelocities = randomVelocity(sliderVelocityGroupTwo.value);
-    const ball = null;
-
-    
-      ball = new Ball(
-        "two",
-        random(20, width - 20),
-        random(20, height - 20),
-        randomVelocities[0],
-        randomVelocities[1],
-        normal,
-        10
-      );
-    
-    
-    persons.push(ball);
+  for (let i = 0; i < persons.length; i++) {
+    persons[i].draw(ctx);
+    if(updatePersons === true && firstRun === false){
+      persons[i].update(screenSize);
+    }
+    persons[i].collisionDetect(persons);
   }
 
-  //setGroups();
   console.log(persons);
-
-}
-
-function setGroups(){
-  var numberOfGroupOne = Math.floor(numberOfPersons * percentGroupOne / 100);
-  var numberOfGroupTwo = numberOfPersons - numberOfGroupOne;
-
-  for (let index = 0; index < numberOfGroupOne; index++) {
-    persons[index].group = "one";    
-  }
-
-  for (let index = numberOfGroupOne; index < numberOfPersons; index++) {
-    persons[index].group = "two";    
-  }
 }
 
 function start(){
   startStop = true;
   updatePersons = true;
   buttonStartStop.textContent = "Stoppen";
-  sliderNumberOfPersons.disabled = true;
-  persons = [];
-  addFirstPerson = true;
-  fillPersons();
   loop();
 }
 
 function stop(){
   startStop = false;
   buttonStartStop.textContent = "Starten";
-  sliderNumberOfPersons.disabled = false;
-  updatePersons = false;
+  updatePersons = true;
   loop();
-}
-function reset(){
-  startStop = false;
-  buttonStartStop.textContent = "Starten";
-  sliderNumberOfPersons.disabled = false;
   updatePersons = false;
-    
-  persons = [];
-  ctx.fillStyle = 'rgba(0,0,0,1)';
-  ctx.fillRect(0, 0, width, height);
-
-  //loop();
 }
 
 function numberPersonsChanged(newNumberOfPersons){
@@ -326,10 +279,14 @@ function numberPersonsChanged(newNumberOfPersons){
       persons[0].color = infected;
     }
     numberOfPersons = newNumberOfPersons;
-    loop();
+    prepareCanvasAndPersons();
+    console.log(persons);
   }
   updatePersons = true;
 }
 
-loop();
-setGroups();
+function reset(){
+  location.reload();
+}
+
+prepareCanvasAndPersons();

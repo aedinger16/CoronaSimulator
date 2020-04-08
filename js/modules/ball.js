@@ -44,8 +44,8 @@ export class Ball {
       this.velY = -(this.velY);
     }
 
-    this.x += this.velX;
-    this.y += this.velY;
+    this.x += this.velX / 20;
+    this.y += this.velY / 20;
   }
 
   // define ball collision detection
@@ -64,10 +64,5 @@ export class Ball {
       }
     }
   }
-
-
-  // set velocityX(velocityX){
-  //   this.velX = velocityX;
-  // }
 
 }
