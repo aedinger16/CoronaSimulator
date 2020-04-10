@@ -1,0 +1,143 @@
+html, body {
+  margin: 0;
+}
+
+html {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  height: inherit;
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: -1px;
+  position: absolute;
+  margin: 0;
+  top: -4px;
+  right: 5px;
+
+  color: transparent;
+  text-shadow: 0 0 4px white;
+}
+
+img {
+  display: none;
+}
+
+nav {
+  align-content: flex-start;
+  min-width: 250px;
+  width: 15%;
+  height: inherit;
+  /* background-color: black; */
+}
+
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  position: relative;
+  -webkit-appearance: none;
+  width: 98%;
+  height: 3px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 23px;
+  height: 10px;
+  border: 0;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 23px;
+  height: 10px;
+  border: 0;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.divAll {
+  margin: 0px;
+  min-width: 250px;
+  width: 15%;
+  display: flex;
+  height: fit-content;
+}
+
+.divSettings {
+  margin: 5px;
+  margin-top: 15px;;
+  min-width: 250px;
+  width: 15%;
+  float: left !important;
+}
+
+.divCanvas {
+  max-width: 85%;
+  margin: 0px;
+  float: right;
+}
+
+.divSettingsGroup {
+  border: 2px solid lightgray;
+  margin: 10px;
+  padding: 20px;
+}
+
+canvas {
+  height: inherit;
+  width: inherit;
+}
+
+label {
+  font-size: 14px;
+}
+
+
+/* START STOPP BUTTON */
+.myButton {
+  width: 92%;
+  margin-left: 10px;
+  margin-top: 10px;
+	box-shadow: 0px 10px 14px -7px #3e7327;
+	background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+	background-color:#4CAF50;
+	border-radius:4px;
+	border:1px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #5b8a3c;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+	background-color:#72b352;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
