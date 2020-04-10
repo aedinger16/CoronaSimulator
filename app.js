@@ -5,13 +5,15 @@ import {
   STARTING_BALLS,
   RUN,
   STATIC_PEOPLE_PERCENTATGE,
-  STATES
+  STATES,
+  resetRun
 } from './options.js'
 
 import {
   replayButton,
   deathFilter,
-  stayHomeFilter
+  stayHomeFilter,
+  sliderNumberOfPersons
 } from './dom.js'
 
 import { Ball } from './Ball.js'
@@ -31,7 +33,31 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
     let id = 0
     balls = []
     Object.keys(STARTING_BALLS).forEach(state => {
+      
+      if(state === "well"){
+        console.log(sliderNumberOfPersons.value);
+
+        Array.from({ length: sliderNumberOfPersons.value-1 }, () => {
+
+          const hasMovement = RUN.filters.stayHome
+            ? sketch.random(0, 100) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
+            : true
+  
+          balls[id] = new Ball({
+            id,
+            sketch,
+            state,
+            hasMovement,
+            x: sketch.random(BALL_RADIUS, sketch.width - BALL_RADIUS),
+            y: sketch.random(BALL_RADIUS, sketch.height - BALL_RADIUS)
+          })
+          id++
+        })
+      }
+      else{
+      
       Array.from({ length: STARTING_BALLS[state] }, () => {
+
         const hasMovement = RUN.filters.stayHome
           ? sketch.random(0, 100) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
           : true
@@ -46,6 +72,7 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
         })
         id++
       })
+    }
     })
   }
 
@@ -85,6 +112,12 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
       startBalls()
       resetValues()
     }
+
+    sliderNumberOfPersons.onchange = () => {
+      startBalls();
+      resetValues();
+      resetRun();
+    }
   }
 
   sketch.draw = () => {
@@ -97,4 +130,5 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
     })
     updateCount()
   }
+  
 }, document.getElementById('canvas'))

@@ -33,7 +33,7 @@ export const COUNTERS = {
   'max-concurrent-infected': 'max-concurrent-infected'
 }
 
-export const STARTING_BALLS = {
+export let STARTING_BALLS = {
   [STATES.infected]: 1,
   [STATES.well]: document.getElementById('sliderNumberOfPersons').value - 1,
   [STATES.recovered]: 0,
