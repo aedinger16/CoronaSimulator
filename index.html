@@ -5,12 +5,6 @@
   <title>Coronavirus Spread Simulator 🦠</title>
 
   <meta name="description" content="Coronavirus Spread Simulator with different strategies. Open source.">
-  
-  <meta name="twitter:creator" content="@midudev" />
-  <meta name="twitter:domain" content="midu.dev" />
-  <meta name="twitter:image" content="https://corona-virus-spread-simulator.midudev.now.sh/assets/og.jpg" />
-  <meta name="twitter:site" content="@midudev" />
-  <meta name="twitter:card" content="summary_large_image" />
 
   <meta property="og:locale" content="en_EN" />
   <meta property="og:title" content="Coronavirus Spread Simulator 🦠" />
@@ -18,7 +12,7 @@
   <meta property="og:description" content="Coronavirus Spread Simulator with different strategies. Open source." />
   <meta property="og:site_name" content="midu.dev" />
 
-  <link rel="canonical" href="https://corona-virus-spread-simulator.midudev.now.sh/">
+  <!-- <link rel="canonical" href="https://corona-virus-spread-simulator.midudev.now.sh/"> -->
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link as="script" rel="preload" href="./p5.min.js" />
@@ -32,6 +26,9 @@
   <script defer src="./p5.min.js"></script>
   <script type="module" src="./app.js"></script>
   <style>
+
+    /* Ned unser CSS*/
+
     html {
       box-sizing: border-box;
     }
@@ -172,38 +169,231 @@
       }
     }
 
+    /* Unser CSS */
+    html, body {
+  margin: 0;
+}
+
+html {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  height: inherit;
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: -1px;
+  position: absolute;
+  margin: 0;
+  top: -4px;
+  right: 5px;
+
+  color: transparent;
+  text-shadow: 0 0 4px white;
+}
+
+img {
+  display: none;
+}
+
+nav {
+  align-content: flex-start;
+  min-width: 250px;
+  width: 15%;
+  height: inherit;
+  /* background-color: black; */
+}
+
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  position: relative;
+  -webkit-appearance: none;
+  width: 98%;
+  height: 3px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 23px;
+  height: 10px;
+  border: 0;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 23px;
+  height: 10px;
+  border: 0;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.divAll {
+  align-items: center;
+  align-self: center;
+  margin: 0px;
+  min-width: 250px;
+  width: 15%;
+  display: flex;
+  height: fit-content;
+}
+
+.divSettings {
+  margin: 5px;
+  margin-top: 15px;;
+  min-width: 250px;
+  width: 15%;
+  float: left !important;
+}
+
+.divCanvas {
+  margin: 0px;
+  float: right;
+}
+
+.divSettingsGroup {
+  border: 2px solid lightgray;
+  margin: 10px;
+  padding: 20px;
+}
+
+canvas {
+  height: inherit;
+  width: inherit;
+}
+
+label {
+  font-size: 14px;
+}
+
+
+/* START STOPP BUTTON */
+.myButton {
+  width: 92%;
+  margin-left: 10px;
+  margin-top: 10px;
+	box-shadow: 0px 10px 14px -7px #3e7327;
+	background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+	background-color:#4CAF50;
+	border-radius:4px;
+	border:1px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #5b8a3c;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+	background-color:#72b352;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+
   </style>
 </head>
 <body>
   <h1>COVID-19 Spread Simulator 🦠</h1>
   <main>
-    <header>
-      <form>
-        <label aria-label="Activate People Stay At Home filter" title="People stay at home">
-          <input id="stay-home" type="checkbox">🏠 Stay At Home
-        </label>
-        <label aria-label="Activate Deaths provoked by virus" title="Deaths provoked by virus">
-          <input id="deaths" type="checkbox">☠️ Show deaths
-        </label>
-      </form>
 
-      <div id="count">
-        <div>Healthy<br /><span id="well">0</span></div>
-        <div>Recovered<br /><span id="recovered">0</span></div>
-        <div>Sick<br /><span id="infected">0</span></div>
-        <div id="death-count">Deaths<br /><span id="death">0</span></div>
-        <div>Max Concurrently Sick<br /><span id="max-concurrent-infected">0</span></div>
-      </div>
+    
 
-      <svg id="graph" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="50" width="100%" aria-labelledby="Graph of virus spread" role="img">
-        <title>Graph of virus spread</title>
-      </svg>
-    </header>
-    <section>
-      <div id="canvas">
-        <div id="replay" style='display: none'>🔁 Run a new simulation</div>
+
+    <div class="divAll">
+
+      
+
+      
+
+
+      <div id="divSettings" class="divSettings">
+        <div class="divSettingsGroup">
+          <label>Prozentzahl Gruppe 1</label>
+          <label>Geschwindigkeit Gruppe 1</label>
+          <input id="sliderPercentOne" type="range" min="1" max="100" value="50" class="slider" id="myRange">
+          <input id="sliderVelocityOne" type="range" min="1" max="100" value="50" step="0.1" class="slider" id="myRange">
+        </div>
+        </br>
+        <div class="divSettingsGroup">
+          <label>Prozentzahl Gruppe 2</label>
+          <label>Geschwindigkeit Gruppe 2</label>
+          <input id="sliderPercentTwo" type="range" min="1" max="100" value="50" class="slider" id="myRange">
+          <input id="sliderVelocityTwo" type="range" min="1" max="100" value="50" step="0.1" class="slider" id="myRange">
+        </div>
+        </br>
+        <div class="divSettingsGroup">
+          <label>Personenanzahl</label>
+          <input id="sliderNumberOfPersons" type="range" min="1" max="200" value="100" class="slider" id="myRange">
+        </div>
+        </br>
+        <div class="divSettingsGroup">
+          <label>Zeit der Genesung</label>
+          <input disabled id="sliderTimeForRecover" type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        </div>
+        <button id="buttonStartStop" class="myButton">Starten</button>
+        <button id="buttonReset" class="myButton">Reset</button>
       </div>
-    </section>
+      <div class="divCanvas">
+        <!-- <canvas></canvas> -->
+        
+        <header>
+          <form>
+            <label aria-label="Activate People Stay At Home filter" title="People stay at home">
+              <input id="stay-home" type="checkbox">🏠 Stay At Home
+            </label>
+            <label aria-label="Activate Deaths provoked by virus" title="Deaths provoked by virus">
+              <input id="deaths" type="checkbox">☠️ Show deaths
+            </label>
+          </form>
+    
+          <div id="count">
+            <div>Healthy<br /><span id="well">0</span></div>
+            <div>Recovered<br /><span id="recovered">0</span></div>
+            <div>Sick<br /><span id="infected">0</span></div>
+            <div id="death-count">Deaths<br /><span id="death">0</span></div>
+            <div>Max Concurrently Sick<br /><span id="max-concurrent-infected">0</span></div>
+          </div>
+    
+          
+        </header>
+
+        
+        <svg id="graph" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="50" width="100%" aria-labelledby="Graph of virus spread" role="img">
+          <title>Graph of virus spread</title>
+        </svg>
+        <section>
+          <div id="canvas">
+            <div id="replay" style='display: none'>🔁 Run a new simulation</div>
+          </div>
+        </section>
+      </div>
+    </div>  
   </main>
 </body>
 </html>
