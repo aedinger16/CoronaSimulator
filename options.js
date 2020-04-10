@@ -47,13 +47,18 @@ export const RUN = {
   tick: 0
 }
 
-export const MORTALITY_PERCENTATGE = 5
+export var MORTALITY_PERCENTATGE = 5
 export const SPEED = 1
 export const TOTAL_TICKS = 5000
-export const TICKS_TO_RECOVER = 500
+export var TICKS_TO_RECOVER = 256
 export const STATIC_PEOPLE_PERCENTATGE = 25
 
 export const resetRun = () => {
+
+  STARTING_BALLS[STATES.well] = document.getElementById('sliderNumberOfPersons').value - 1;
+  MORTALITY_PERCENTATGE = document.getElementById('sliderMortality').value;
+  TICKS_TO_RECOVER = document.getElementById('sliderTimeForRecover').value;
+
   RUN.results = { ...STARTING_BALLS }
   RUN.tick = 0
 }

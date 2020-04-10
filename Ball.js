@@ -39,6 +39,7 @@ export class Ball {
         }
       }
 
+      // 64 Ticks/Durchläufe = 1 Sekunde  -----  Slider 4 Sekunden (256 Ticks) bis 10 Sekunden (640 Ticks)
       if (this.timeInfected >= TICKS_TO_RECOVER) {
         this.state = STATES.recovered
         RUN.results[STATES.infected]--

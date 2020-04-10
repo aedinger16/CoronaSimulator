@@ -2,15 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Coronavirus Spread Simulator 🦠</title>
-
-  <meta name="description" content="Coronavirus Spread Simulator with different strategies. Open source.">
-
-  <meta property="og:locale" content="en_EN" />
-  <meta property="og:title" content="Coronavirus Spread Simulator 🦠" />
-  <meta property="og:image" content="https://corona-virus-spread-simulator.midudev.now.sh/assets/og.jpg" />
-  <meta property="og:description" content="Coronavirus Spread Simulator with different strategies. Open source." />
-  <meta property="og:site_name" content="midu.dev" />
+  <title>Corona Simulator 🦠</title>
 
   <!-- <link rel="canonical" href="https://corona-virus-spread-simulator.midudev.now.sh/"> -->
 
@@ -22,330 +14,82 @@
   <link as="script" rel="modulepreload" href="./Ball.js" />
   <link as="script" rel="modulepreload" href="./results.js" />
   <link as="script" rel="modulepreload" href="./collisions.js" />
+
+  <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
   
   <script defer src="./p5.min.js"></script>
   <script type="module" src="./app.js"></script>
-  <style>
-
-    /* Ned unser CSS*/
-
-    html {
-      box-sizing: border-box;
-    }
-    
-    *, *:before, *:after {
-      box-sizing: inherit;
-    }
-
-    #share {
-      position: fixed;
-      bottom: 16px;
-      right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 5px 0 0px 5px;
-      background: rgba(0, 153, 255, 0.25);
-      z-index: 1;
-      text-decoration: none;
-      font-size: 12px;
-      padding: 4px 16px;
-      color: #000;
-    }
-
-    #share:hover {
-      background: rgba(0, 153, 255, 0.5);
-    }
-
-    body {
-      align-items: center;
-      background-image: radial-gradient(#D7D7D7 1px, transparent 1px), radial-gradient(#d7d7d7 1px, transparent 1px);
-      background-position: 0 0, 25px 25px;
-      background-size: 50px 50px;
-      display: flex;
-      flex-direction: column;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      justify-content: center;
-      margin: 0 auto;
-      user-select: none;
-      width: 360px;
-    }
-
-    h1 {
-      font-size: 23px;
-      text-align: center;
-    }
-
-    main {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-
-    canvas {
-      border: 1px solid #eee;
-    }
-
-    #graph {
-      margin-bottom: 1px;
-      transform: scaleY(-1);
-    }
-
-    #count {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-    }
-
-    #count div {
-      margin-bottom: 16px;
-      padding: 0 10px;
-    }
-
-    #count span {
-      font-size: 21px;
-      font-weight: 800;
-    }
-
-    footer {
-      padding-bottom: 8px;
-      color: #777;
-      font-size: 12px;
-    }
-
-    footer a {
-      color: #09f;
-      text-decoration: none;
-    }
-
-    form {
-      display: flex;
-      justify-content: space-around;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 16px;
-      margin-bottom: 16px;
-    }
-
-    label {
-      align-items: center;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    #canvas {
-      margin: auto;
-      padding-bottom: 16px;
-      position: relative;
-    }
-
-    #replay {
-      align-items: center;
-      background: rgba(255, 255, 255, .85);
-      cursor: pointer;
-      display: flex;
-      height: 100%;
-      font-weight: 500;
-      font-size: 21px;
-      justify-content: center;
-      position: absolute;
-      width: 100%;
-    }
-
-    #death-count {
-      display: none;
-    }
-
-    #death-count.show {
-      display: block;
-    }
-
-    @media (min-width: 800px) {
-      body {
-       width: 800px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-    }
-
-    /* Unser CSS */
-    html, body {
-  margin: 0;
-}
-
-html {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  height: 100%;
-}
-
-body {
-  overflow: hidden;
-  height: inherit;
-}
-
-h1 {
-  font-size: 2rem;
-  letter-spacing: -1px;
-  position: absolute;
-  margin: 0;
-  top: -4px;
-  right: 5px;
-
-  color: transparent;
-  text-shadow: 0 0 4px white;
-}
-
-img {
-  display: none;
-}
-
-nav {
-  align-content: flex-start;
-  min-width: 250px;
-  width: 15%;
-  height: inherit;
-  /* background-color: black; */
-}
-
-.slidecontainer {
-  width: 100%;
-}
-
-.slider {
-  position: relative;
-  -webkit-appearance: none;
-  width: 98%;
-  height: 3px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider:hover {
-  opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 23px;
-  height: 10px;
-  border: 0;
-  background: #4CAF50;
-  cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-  width: 23px;
-  height: 10px;
-  border: 0;
-  background: #4CAF50;
-  cursor: pointer;
-}
-
-.divAll {
-  align-items: center;
-  align-self: center;
-  margin: 0px;
-  min-width: 250px;
-  width: 15%;
-  display: flex;
-  height: fit-content;
-}
-
-.divSettings {
-  margin: 5px;
-  margin-top: 15px;;
-  min-width: 250px;
-  width: 15%;
-  float: left !important;
-}
-
-.divCanvas {
-  margin: 0px;
-  float: right;
-}
-
-.divSettingsGroup {
-  border: 2px solid lightgray;
-  margin: 10px;
-  padding: 20px;
-}
-
-canvas {
-  height: inherit;
-  width: inherit;
-}
-
-label {
-  font-size: 14px;
-}
-
-
-/* START STOPP BUTTON */
-.myButton {
-  width: 92%;
-  margin-left: 10px;
-  margin-top: 10px;
-	box-shadow: 0px 10px 14px -7px #3e7327;
-	background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
-	background-color:#4CAF50;
-	border-radius:4px;
-	border:1px solid #4b8f29;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
-	font-weight:bold;
-	padding:6px 12px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #5b8a3c;
-}
-.myButton:hover {
-	background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
-	background-color:#72b352;
-}
-.myButton:active {
-	position:relative;
-	top:1px;
-}
-
-
-
-  </style>
 </head>
+
 <body>
-  <h1>COVID-19 Spread Simulator 🦠</h1>
+  <h1>Corona-Simulator 🦠</h1>
   <main>
     <div class="divAll">
       <div id="divSettings" class="divSettings">
         <div class="divSettingsGroup">
-          <label>Prozentzahl Gruppe 1</label>
-          <label>Geschwindigkeit Gruppe 1</label>
-          <input id="sliderPercentOne" type="range" min="1" max="100" value="50" class="slider" id="myRange">
-          <input id="sliderVelocityOne" type="range" min="1" max="100" value="50" step="0.1" class="slider" id="myRange">
+          <label class="lblSettings">Prozentzahl Gruppe 1</label>
+          <label class="lblSettings">Geschwindigkeit Gruppe 1</label>
+          <input id="sliderPercentOne" type="range" min="1" max="100" value="50" class="slider">
+          <div class="divSettingsValues">
+            <label class="lblSettingsValues">0%</label>
+            <label class="lblSettingsValues">50</label>
+            <label class="lblSettingsValues">100%</label>
+          </div>
+          <input id="sliderVelocityOne" type="range" min="1" max="100" value="50" step="0.1" class="slider">
+          <div class="divSettingsValues">
+            <label class="lblSettingsValues">1</label>
+            <label class="lblSettingsValues">10</label>
+            <label class="lblSettingsValues">20</label>
+          </div>
         </div>
         </br>
         <div class="divSettingsGroup">
-          <label>Prozentzahl Gruppe 2</label>
-          <label>Geschwindigkeit Gruppe 2</label>
-          <input id="sliderPercentTwo" type="range" min="1" max="100" value="50" class="slider" id="myRange">
-          <input id="sliderVelocityTwo" type="range" min="1" max="100" value="50" step="0.1" class="slider" id="myRange">
+          <label class="lblSettings">Prozentzahl Gruppe 2</label>
+          <label class="lblSettings">Geschwindigkeit Gruppe 2</label>
+          <input id="sliderPercentTwo" type="range" min="1" max="100" value="50" class="slider">
+          <div class="divSettingsValues">
+            <label class="lblSettingsValues">0%</label>
+            <label class="lblSettingsValues">50</label>
+            <label class="lblSettingsValues">100%</label>
+          </div>
+          <input id="sliderVelocityTwo" type="range" min="1" max="100" value="50" step="0.1" class="slider">
+          <div class="divSettingsValues">
+            <label class="lblSettingsValues">1</label>
+            <label class="lblSettingsValues">10</label>
+            <label class="lblSettingsValues">20</label>
+          </div>
         </div>
         </br>
         <div class="divSettingsGroup">
-          <label>Personenanzahl</label>
-          <input id="sliderNumberOfPersons" type="range" min="1" max="200" value="100" class="slider" id="myRange">
+          <label class="lblSettings">Personenanzahl</label>
+          <input id="sliderNumberOfPersons" type="range" min="2" max="200" value="100" class="slider">
+          <div class="divSettingsValues">
+            <label class="lblSettingsValues">2</label>
+            <label id="lblNumberOfPersons" class="lblSettingsValues">100</label>
+            <label class="lblSettingsValues">200</label>
+          </div>
         </div>
         </br>
         <div class="divSettingsGroup">
-          <label>Zeit der Genesung</label>
-          <input disabled id="sliderTimeForRecover" type="range" min="1" max="100" value="50" class="slider" id="myRange">
+          <label class="lblSettings">Zeit der Genesung</label>
+          <input id="sliderTimeForRecover" type="range" min="256" max="640" value="256" class="slider">
+          <div class="divSettingsValues">
+            <label class="lblSettingsValues">4 Sek.</label>
+            <label id="lblTimeForRecover" class="lblSettingsValues">4 Sek</label>
+            <label class="lblSettingsValues">10 Sek.</label>
+          </div>
         </div>
+      </br>
+        <div class="divSettingsGroup">
+          <label class="lblSettings">Mortalität</label>
+          <input id="sliderMortality" type="range" min="1" max="100" value="5" class="slider">
+          <div class="divSettingsValues">
+            <label class="lblSettingsValues">1%</label>
+            <label id="lblMortality" class="lblSettingsValues">5%</label>
+            <label class="lblSettingsValues">100%</label>
+          </div>
+        </div>
+        
         <!-- <button id="buttonStartStop" class="myButton">Starten</button> -->
         <!-- <button id="buttonReset" class="myButton">Reset</button> -->
       </div>
@@ -378,7 +122,7 @@ label {
           <title>Graph of virus spread</title>
         </svg>
         <section>
-          <div id="canvas">
+          <div id="canvas" >
             <div id="replay" style='display: none'>🔁 Run a new simulation</div>
           </div>
         </section>

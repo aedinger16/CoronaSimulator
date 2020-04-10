@@ -13,7 +13,9 @@ import {
   replayButton,
   deathFilter,
   stayHomeFilter,
-  sliderNumberOfPersons
+  sliderNumberOfPersons,
+  sliderMortality,
+  sliderTimeForRecover
 } from './dom.js'
 
 import { Ball } from './Ball.js'
@@ -29,18 +31,19 @@ const matchMedia = window.matchMedia('(min-width: 800px)')
 let isDesktop = matchMedia.matches
 
 export const canvas = new window.p5(sketch => { // eslint-disable-line
-  const startBalls = () => {
+    const startBalls = () => {
     let id = 0
     balls = []
     Object.keys(STARTING_BALLS).forEach(state => {
       
       if(state === "well"){
-        console.log(sliderNumberOfPersons.value);
+
+        console.log("IF");
 
         Array.from({ length: sliderNumberOfPersons.value-1 }, () => {
 
           const hasMovement = RUN.filters.stayHome
-            ? sketch.random(0, 100) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
+            ? sketch.random(0, sliderNumberOfPersons.value) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
             : true
   
           balls[id] = new Ball({
@@ -55,11 +58,11 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
         })
       }
       else{
-      
+      console.log("ELSE")
       Array.from({ length: STARTING_BALLS[state] }, () => {
 
         const hasMovement = RUN.filters.stayHome
-          ? sketch.random(0, 100) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
+          ? sketch.random(0, sliderNumberOfPersons.value) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
           : true
 
         balls[id] = new Ball({
@@ -116,7 +119,20 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
     sliderNumberOfPersons.onchange = () => {
       startBalls();
       resetValues();
-      resetRun();
+      document.getElementById('lblNumberOfPersons').textContent = sliderNumberOfPersons.value;
+    }
+
+    sliderTimeForRecover.onchange = () => {
+      startBalls();
+      resetValues();
+      document.getElementById('lblTimeForRecover').textContent = Math.floor(sliderTimeForRecover.value / 64) + " Sek";
+    }
+
+    sliderMortality.onchange = () => {
+      startBalls();
+      resetValues();
+      document.getElementById('lblMortality').textContent = sliderMortality.value + "%";
+      
     }
   }
 

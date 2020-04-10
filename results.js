@@ -78,7 +78,6 @@ export const updateCount = () => {
     }
   }
   else{
-    console.log("Stopp");
     Object.entries(domElements).forEach(([state, domElement]) => {
       if (domElement) {
         domElement.innerText = RUN.results[state]
