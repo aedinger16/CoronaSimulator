@@ -29,7 +29,7 @@ const normal = `rgb(0,0,136)`;
 
 var startStop = false;
 
-var numberOfPersons = 50;
+var numberOfPersons = 100;
 
 var timeForRecover = 10;
 
@@ -96,7 +96,7 @@ var updatePersons = true;
 var firstRun = true;
 
 function loop() {
-  ctx.fillStyle = 'rgba(0,0,0,1)';
+  ctx.fillStyle = 'rgba(240,240,240,1)';
   ctx.fillRect(0, 0, width, height);
 
   for (let i = 0; i < persons.length; i++) {
@@ -158,7 +158,7 @@ function setGroups(group){
   }
 
   for (let index = numberOfGroupOne; index < numberOfPersons; index++) {
-    persons[index].group = "two";    
+    persons[index].group = "two";  
   }
 }
 
@@ -183,27 +183,59 @@ function updateVelocity(group, velGroup){
         velYIsMinus = true;
       }
   
-      
       const randomVelocities = randomVelocity(velGroup);
 
-      person.velX = randomVelocities[0];
-      person.velY = randomVelocities[1];
+      var newVelX = randomVelocities[0];
+      var newVelY = randomVelocities[1];  
 
-      // var multiplier = Math.pow(velGroup, 2) / (Math.pow(velX, 2) + Math.pow(velY, 2));
+      //#region Check and set direction
 
-      // velXIsMinus ? person.velX = -(Math.pow(velX, 2) * multiplier) / 100 : person.velX = (Math.pow(velX, 2) * multiplier) / 100;
-      // velYIsMinus ? person.velY = -(Math.pow(velY, 2) * multiplier) / 100 : person.velY = (Math.pow(velY, 2) * multiplier) / 100;  
+      if(velXIsMinus === true){
+        if(newVelX <= 0){
+          person.velX = newVelX;
+        }
+        else{
+          person.velX = -newVelX;
+        }
+      }
+      else{
+        if(newVelX <= 0){
+          person.velX = Math.abs(newVelX);
+        }
+        else{
+          person.velX = newVelX;
+        }
+      }
+
+      if(velYIsMinus === true){
+        if(newVelY <= 0){
+          person.velY = newVelY;
+        }
+        else{
+          person.velY = -newVelY;
+        }
+      }
+      else{
+        if(newVelY <= 0){
+          person.velY = Math.abs(newVelY);
+        }
+        else{
+          person.velY = newVelY;
+        }
+      }
+
+      //#endregion
+
     } 
   });
-
-  console.log(persons);
 }
 
 
 function prepareCanvasAndPersons(){
 
-  ctx.fillStyle = 'rgba(0,0,0,1)';
+  ctx.fillStyle = 'rgba(240,240,240,1)';
   ctx.fillRect(0, 0, width, height);
+  // ctx.strokeRect(0, 0, width, height)
 
   var numberOfGroupOne = Math.floor(numberOfPersons * sliderPercentGroupOne.value / 100);
   var currentGroup = "one";
@@ -223,7 +255,7 @@ function prepareCanvasAndPersons(){
         randomVelocities[0],
         randomVelocities[1],
         infected,
-        10
+        5
       );
       addFirstPerson = false;
     }
@@ -235,7 +267,7 @@ function prepareCanvasAndPersons(){
         randomVelocities[0],
         randomVelocities[1],
         normal,
-        10
+        5
       );
     }
     
