@@ -1,4 +1,5 @@
 node_modules
-dist
-.cache
-.vscode
+package-lock.json
+.now
+.DS_Store
+public

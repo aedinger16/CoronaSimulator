@@ -1,31 +1,29 @@
-# Bouncing Balls
+# COVID-19 (Coronavirus) spread simulator 🦠
 
-[![Build Status](https://travis-ci.org/gerkirill/bouncing-balls.svg?branch=master)](https://travis-ci.org/gerkirill/bouncing-balls)
+Check simulations about how confinement people could help to stop spreading Coronavirus.
 
-<p align="center">
-  <a href="https://gerkirill.github.io/bouncing-balls/" target="_blank">
-    <img alt="Bouncing Balls" src="images/preview.jpg" width="500" height="300">
-  </a>
-</p>
+[Based on Washington Post Article: Why outbreaks like coronavirus spread exponentially, and how to “flatten the curve” - Washington Post](https://www.washingtonpost.com/graphics/2020/world/corona-simulator/)
 
-## Requirements
-- make sure you have [nodejs](https://nodejs.org/) installed
-- make sure you have [parcel](https://parceljs.org/) globally installed
+## How to start
 
-## Run
+Install all the project dependencies with:
 ```
 npm install
-npm start
-```
-Then open http://localhost:1234/ in your browser.
-
-## Build
-```
-npm run build
 ```
 
-## Test
+And start the development server with:
 ```
-npm test
+npm run dev
 ```
-## BE HAPPY!!!
+
+## Browser support
+
+This project is using EcmaScript Modules, therefore, only browsers with this compatibility will work. (Sorry Internet Explorer 11 and old Edge users).
+
+## Next content
+- Customize strategies (number of static people and mortality)
+- Customize colors
+- Iframe support
+- I18N
+- New strategies
+- Improve the code so I don't get so ashamed. 😳

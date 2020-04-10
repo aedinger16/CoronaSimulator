@@ -1,9 +1,9 @@
-export const calculateChangeDirection = ({ dx, dy }) => {
-  
+const { hypot } = Math
 
-    const hyp = Math.hypot(dx, dy);
+export const calculateChangeDirection = ({ dx, dy }) => {
+  const hyp = hypot(dx, dy);
   const ax = dx / hyp;
-  const ay = dy / hyp;
+  const ay = dy / hyp
   return { ax, ay }
 }
 
