@@ -4,7 +4,8 @@ import {
   TOTAL_TICKS,
   STATES,
   COUNTERS,
-  resetRun
+  resetRun,
+  STARTING_BALLS
 } from './options.js'
 
 import {
@@ -54,7 +55,11 @@ export const resetValues = (isDesktopNewValue = isDesktop) => {
 }
 
 export const updateCount = () => {
-  if (RUN.tick < TOTAL_TICKS) {
+
+  const rects = Object.entries(RUN.results).map(([state, count]) => {return count});
+
+  if (rects[0] !== 0){
+  // if (RUN.tick < TOTAL_TICKS) {
     // calculate max concurrent infected
     if (RUN.results[STATES.infected] > RUN.results['max-concurrent-infected']) {
       RUN.results['max-concurrent-infected']++
@@ -71,6 +76,15 @@ export const updateCount = () => {
     } else {
       RUN.tick % 4 === 0 && updateGraph()
     }
+  }
+  else{
+    console.log("Stopp");
+    Object.entries(domElements).forEach(([state, domElement]) => {
+      if (domElement) {
+        domElement.innerText = RUN.results[state]
+      }
+    })
+    replayElement.style.display = 'flex';
   }
 
   if (RUN.tick === TOTAL_TICKS) {
