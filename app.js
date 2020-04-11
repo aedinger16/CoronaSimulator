@@ -15,7 +15,8 @@ import {
   stayHomeFilter,
   sliderNumberOfPersons,
   sliderMortality,
-  sliderTimeForRecover
+  sliderTimeForRecover,
+  sliderPercentOne
 } from './dom.js'
 
 import { Ball } from './Ball.js'
@@ -43,7 +44,7 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
         Array.from({ length: sliderNumberOfPersons.value-1 }, () => {
 
           const hasMovement = RUN.filters.stayHome
-            ? sketch.random(0, sliderNumberOfPersons.value) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
+            ? sketch.random(0, sliderNumberOfPersons.value) < sliderPercentOne.value || state === STATES.infected
             : true
   
           balls[id] = new Ball({
@@ -62,7 +63,7 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
       Array.from({ length: STARTING_BALLS[state] }, () => {
 
         const hasMovement = RUN.filters.stayHome
-          ? sketch.random(0, sliderNumberOfPersons.value) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
+          ? sketch.random(0, sliderNumberOfPersons.value) < sliderPercentOne.value || state === STATES.infected
           : true
 
         balls[id] = new Ball({
@@ -132,7 +133,16 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
       startBalls();
       resetValues();
       document.getElementById('lblMortality').textContent = sliderMortality.value + "%";
-      
+    }
+
+    sliderPercentOne.onchange = () => {
+      // STATIC_PEOPLE_PERCENTATGE = sliderPercentOne.value;
+      startBalls();
+      resetValues();
+      // console.log(STATIC_PEOPLE_PERCENTATGE)
+
+      console.log(RUN.filters.stayHome)
+      document.getElementById('sliderPercentOne').textContent = sliderPercentOne.value + "%";
     }
   }
 

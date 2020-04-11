@@ -51,7 +51,7 @@ export var MORTALITY_PERCENTATGE = 5
 export const SPEED = 1
 export const TOTAL_TICKS = 5000
 export var TICKS_TO_RECOVER = 256
-export const STATIC_PEOPLE_PERCENTATGE = 25
+export let STATIC_PEOPLE_PERCENTATGE = 25
 
 export const resetRun = () => {
 
