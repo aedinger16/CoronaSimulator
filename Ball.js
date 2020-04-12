@@ -3,6 +3,8 @@ import {
   COLORS,
   MORTALITY_PERCENTATGE,
   TICKS_TO_RECOVER,
+  velocityGroupOne,
+  velocityGroupTwo,
   RUN,
   // SPEED,
   STATES
@@ -32,6 +34,7 @@ export class Ball {
 
   checkState () {
     if (this.state === STATES.infected) {
+      // Man stirbt zurzeit doppelt so schnell wie man genest
       if (RUN.filters.death && !this.survivor && this.timeInfected >= TICKS_TO_RECOVER / 2) {
         this.survivor = this.sketch.random(100) >= MORTALITY_PERCENTATGE
         if (!this.survivor) {
@@ -68,7 +71,21 @@ export class Ball {
       if (checkCollision({ dx, dy, diameter: BALL_RADIUS * 2 })) {
         const { ax, ay } = calculateChangeDirection({ dx, dy })
 
-        var randomVelocities = randomVelocity(this.speed);
+        var randomVelocitiesThis;
+        if (this.group === 1){
+          randomVelocitiesThis = randomVelocity(velocityGroupOne);
+        }
+        else{
+          randomVelocitiesThis = randomVelocity(velocityGroupTwo);
+        }
+
+        var randomVelocitiesOtherBall;
+        if (otherBall.group === 1){
+          randomVelocitiesOtherBall = randomVelocity(velocityGroupOne);
+        }
+        else{
+          randomVelocitiesOtherBall = randomVelocity(velocityGroupTwo);
+        }
 
         // console.log(randomVelocities)
 
@@ -77,13 +94,13 @@ export class Ball {
         otherBall.vx = ax
         otherBall.vy = ay
 
-        this.vx < 0 ? this.vx = -Math.abs(randomVelocities[0]) : this.vx = Math.abs(randomVelocities[0]);
+        this.vx < 0 ? this.vx = -Math.abs(randomVelocitiesThis[0]) : this.vx = Math.abs(randomVelocitiesThis[0]);
 
-        this.vy < 0 ? this.vy = -Math.abs(randomVelocities[1]) : this.vy = Math.abs(randomVelocities[1]);
+        this.vy < 0 ? this.vy = -Math.abs(randomVelocitiesThis[1]) : this.vy = Math.abs(randomVelocitiesThis[1]);
 
-        otherBall.vx < 0 ? otherBall.vx = -Math.abs(randomVelocities[0]) : otherBall.vx = Math.abs(randomVelocities[0]);
+        otherBall.vx < 0 ? otherBall.vx = -Math.abs(randomVelocitiesOtherBall[0]) : otherBall.vx = Math.abs(randomVelocitiesOtherBall[0]);
 
-        otherBall.vy < 0 ? otherBall.vy = -Math.abs(randomVelocities[1]) : otherBall.vy = Math.abs(randomVelocities[1]);
+        otherBall.vy < 0 ? otherBall.vy = -Math.abs(randomVelocitiesOtherBall[1]) : otherBall.vy = Math.abs(randomVelocitiesOtherBall[1]);
 
         // both has same state, so nothing to do
         if (this.state === state) return
