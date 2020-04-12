@@ -53,9 +53,32 @@ export const TOTAL_TICKS = 5000
 export var TICKS_TO_RECOVER = 256
 export let STATIC_PEOPLE_PERCENTATGE = 25
 
+export var numberOfPersons = 100;
+
+export var percentGroupOne = 50;
+export var numberOfPersonsGroupOne = 50;
+
+export var percentGroupTwo = 50;
+export var numberOfPersonsGroupTwo = 50;
+
+export var velocityGroupOne = 1;
+export var velocityGroupTwo = 1;
+
 export const resetRun = () => {
 
   STARTING_BALLS[STATES.well] = document.getElementById('sliderNumberOfPersons').value - 1;
+
+  numberOfPersons = document.getElementById('sliderNumberOfPersons').value
+
+  percentGroupOne = document.getElementById('sliderPercentOne').value
+  percentGroupTwo = document.getElementById('sliderPercentTwo').value
+  
+  numberOfPersonsGroupOne = numberOfPersons * percentGroupOne / 100;
+  numberOfPersonsGroupTwo = numberOfPersons - numberOfPersonsGroupOne;
+
+  velocityGroupOne = document.getElementById('sliderVelocityOne').value;
+  velocityGroupTwo = document.getElementById('sliderVelocityTwo').value;
+
   MORTALITY_PERCENTATGE = document.getElementById('sliderMortality').value;
   TICKS_TO_RECOVER = document.getElementById('sliderTimeForRecover').value;
 

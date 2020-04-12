@@ -4,19 +4,23 @@ import {
   MORTALITY_PERCENTATGE,
   TICKS_TO_RECOVER,
   RUN,
-  SPEED,
+  // SPEED,
   STATES
 } from './options.js'
 import { checkCollision, calculateChangeDirection } from './collisions.js'
+import { randomVelocity } from './randomVelocity.js'
 
 const diameter = BALL_RADIUS * 2
 
 export class Ball {
-  constructor ({ x, y, id, state, sketch, hasMovement }) {
+  constructor ({ x, y, group, speed, id, state, sketch, hasMovement }) {
     this.x = x
     this.y = y
-    this.vx = sketch.random(-1, 1) * SPEED
-    this.vy = sketch.random(-1, 1) * SPEED
+    this.group = group;
+    this.speed = speed;
+    var randomVelocities = randomVelocity(speed);
+    this.vx = randomVelocities[0]
+    this.vy = randomVelocities[1]
     this.sketch = sketch
     this.id = id
     this.state = state
@@ -64,10 +68,22 @@ export class Ball {
       if (checkCollision({ dx, dy, diameter: BALL_RADIUS * 2 })) {
         const { ax, ay } = calculateChangeDirection({ dx, dy })
 
+        var randomVelocities = randomVelocity(this.speed);
+
+        // console.log(randomVelocities)
+
         this.vx -= ax
         this.vy -= ay
         otherBall.vx = ax
         otherBall.vy = ay
+
+        this.vx < 0 ? this.vx = -Math.abs(randomVelocities[0]) : this.vx = Math.abs(randomVelocities[0]);
+
+        this.vy < 0 ? this.vy = -Math.abs(randomVelocities[1]) : this.vy = Math.abs(randomVelocities[1]);
+
+        otherBall.vx < 0 ? otherBall.vx = -Math.abs(randomVelocities[0]) : otherBall.vx = Math.abs(randomVelocities[0]);
+
+        otherBall.vy < 0 ? otherBall.vy = -Math.abs(randomVelocities[1]) : otherBall.vy = Math.abs(randomVelocities[1]);
 
         // both has same state, so nothing to do
         if (this.state === state) return
