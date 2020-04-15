@@ -34,8 +34,8 @@ export class Ball {
 
   checkState () {
     if (this.state === STATES.infected) {
-      // Man stirbt zurzeit doppelt so schnell wie man genest
-      if (RUN.filters.death && !this.survivor && this.timeInfected >= TICKS_TO_RECOVER / 2) {
+      // Man stirbt zurzeit 1.5-Mal so schnell wie man genest
+      if (RUN.filters.death && !this.survivor && this.timeInfected >= TICKS_TO_RECOVER / 1.5) {
         this.survivor = this.sketch.random(100) >= MORTALITY_PERCENTATGE
         if (!this.survivor) {
           this.hasMovement = false

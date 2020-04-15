@@ -43,6 +43,7 @@ let balls = []
 const matchMedia = window.matchMedia('(min-width: 800px)')
 
 let isDesktop = matchMedia.matches
+document.getElementById('death-count').classList.toggle('show', RUN.filters.death)
 
 export const canvas = new window.p5(sketch => { // eslint-disable-line
     const startBalls = () => {
@@ -134,24 +135,26 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
     matchMedia.addListener(e => {
       isDesktop = e.matches
       createCanvas()
-      startBalls()
       resetValues()
+      startBalls()
     })
 
     replayButton.onclick = () => {
-      startBalls()
       resetValues()
+      startBalls()
     }
 
     deathFilter.onclick = () => {
       RUN.filters.death = !RUN.filters.death
-      startBalls()
       resetValues()
+      startBalls()
       document.getElementById('death-count').classList.toggle('show', RUN.filters.death)
     }
 
     stayHomeFilter.onchange = () => {
       RUN.filters.stayHome = !RUN.filters.stayHome
+      resetValues()
+      startBalls()
     }
 
     sliderNumberOfPersons.onchange = () => {
