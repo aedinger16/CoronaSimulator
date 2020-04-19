@@ -59,7 +59,7 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
         Array.from({ length: infected_group_one === true ? numberOfPersonsGroupOne - 1 : numberOfPersonsGroupOne}, () => {
 
           const hasMovement = RUN.filters.stayHome
-            ? sketch.random(0, numberOfPersonsGroupOne) < STATIC_PEOPLE_PERCENTATGE / 2 || state === STATES.infected
+            ? sketch.random(0, numberOfPersons) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
             : true
   
           balls[id] = new Ball({
@@ -79,7 +79,7 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
         Array.from({ length: infected_group_one === false ? numberOfPersonsGroupTwo - 1 : numberOfPersonsGroupTwo}, () => {
 
           const hasMovement = RUN.filters.stayHome
-            ? sketch.random(0, numberOfPersonsGroupTwo) < STATIC_PEOPLE_PERCENTATGE / 2 || state === STATES.infected
+            ? sketch.random(0, numberOfPersons) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
             : true
   
           balls[id] = new Ball({
@@ -184,6 +184,10 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
 
     sliderVelocityOne.onchange = () => {
       lblVelocityGroupOne.textContent = sliderVelocityOne.value
+    }
+
+    sliderVelocityTwo.onchange = () => {
+      lblVelocityGroupTwo.textContent = sliderVelocityTwo.value
     }
 
     buttonReset.onclick = () => {
